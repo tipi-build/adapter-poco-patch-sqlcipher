@@ -10,8 +10,6 @@ set(POCO_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/poco-build)
 set(POCO_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
 set(POCO_INCLUDE_DIR ${POCO_INSTALL_DIR}/include)
 
-find_package(OpenSSL REQUIRED)
-
 add_compile_definitions(
     _GNU_SOURCE=1
     SQLITE_HAS_CODEC=1
@@ -30,7 +28,7 @@ FetchContent_Declare(poco
     GIT_TAG           ${POCO_PATCH_SQLCIPHER_GIT_TAG}
     SOURCE_DIR        ${POCO_SOURCE_DIR}
     SUBBUILD_DIR      ${POCO_BUILD_DIR}
-    PATCH_COMMAND     cp ${CMAKE_CURRENT_LIST_DIR}/sqlcipher/sqlite3.c ${CMAKE_CURRENT_LIST_DIR}/sqlcipher/sqlite3.h ${POCO_SOURCE_DIR}/Data/SQLite/src/
+    PATCH_COMMAND     cp -r ${CMAKE_CURRENT_LIST_DIR}/poco/Data/ ${POCO_SOURCE_DIR}/
 )
 
 
