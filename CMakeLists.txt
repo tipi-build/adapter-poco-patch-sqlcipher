@@ -20,10 +20,15 @@ add_compile_definitions(
     SQLCIPHER_CRYPTO_OPENSSL
 )
 
+set(POCO_PATCH_SQLCIPHER_REPOSITORY "https://github.com/pocoproject/poco" CACHE STRING "poco source repository")
+set(POCO_PATCH_SQLCIPHER_GIT_TAG "poco-1.11.0-release" CACHE STRING "poco release tag to consume")
+
+MESSAGE(STATUS "Retrieving poco (release: ${POCO_PATCH_SQLCIPHER_GIT_TAG}) from ${POCO_PATCH_SQLCIPHER_REPOSITORY}")
+
 include(FetchContent)
 FetchContent_Declare(poco
-    GIT_REPOSITORY    https://github.com/pocoproject/poco
-    GIT_TAG           "poco-1.11.0-release"
+    GIT_REPOSITORY    ${POCO_PATCH_SQLCIPHER_REPOSITORY}
+    GIT_TAG           ${POCO_PATCH_SQLCIPHER_GIT_TAG}
     SOURCE_DIR        ${POCO_SOURCE_DIR}
     SUBBUILD_DIR      ${POCO_BUILD_DIR}
     PATCH_COMMAND     cp ${CMAKE_CURRENT_LIST_DIR}/sqlcipher/sqlite3.c ${CMAKE_CURRENT_LIST_DIR}/sqlcipher/sqlite3.h ${POCO_SOURCE_DIR}/Data/SQLite/src/
