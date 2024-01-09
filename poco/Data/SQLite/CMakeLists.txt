@@ -36,7 +36,11 @@ set_target_properties(DataSQLite
 	OUTPUT_NAME PocoDataSQLite
 	DEFINE_SYMBOL SQLite_EXPORTS
 )
-target_link_libraries(DataSQLite PUBLIC Poco::Data)
+
+
+# patch by Yannic / make the pocoDataSQLite lib find openssl
+find_package(OpenSSL REQUIRED)
+target_link_libraries(DataSQLite PUBLIC Poco::Data OpenSSL::Crypto)
 target_include_directories(DataSQLite
 	PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -60,10 +64,6 @@ else()
 		SQLITE_OMIT_TCL_VARIABLE
 		SQLITE_OMIT_DEPRECATED
 	)
-
-	# patch by Yannic / make the pocoDataSQLite lib find openssl
-	find_package(OpenSSL REQUIRED)
-	target_link_libraries(DataSQLite OpenSSL::Crypto)
 endif()
 
 POCO_INSTALL(DataSQLite)
