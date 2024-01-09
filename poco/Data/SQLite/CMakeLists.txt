@@ -1,5 +1,4 @@
-# patch by Yannic / make the pocoDataSQLite lib find openssl
-find_package(OpenSSL REQUIRED)
+
 
 # Sources
 file(GLOB SRCS_G "src/*.cpp")
@@ -46,7 +45,7 @@ target_include_directories(DataSQLite
 )
 
 if(POCO_UNBUNDLED)
-		target_link_libraries(DataSQLite PUBLIC SQLite::SQLite3)
+	target_link_libraries(DataSQLite PUBLIC SQLite::SQLite3)
 	target_compile_definitions(DataSQLite PUBLIC
 		POCO_UNBUNDLED
 		SQLITE_THREADSAFE=1
@@ -61,6 +60,10 @@ else()
 		SQLITE_OMIT_TCL_VARIABLE
 		SQLITE_OMIT_DEPRECATED
 	)
+
+	# patch by Yannic / make the pocoDataSQLite lib find openssl
+	find_package(OpenSSL REQUIRED)
+	target_link_libraries(DataSQLite OpenSSL::Crypto)
 endif()
 
 POCO_INSTALL(DataSQLite)
