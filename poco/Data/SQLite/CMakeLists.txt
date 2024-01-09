@@ -1,3 +1,6 @@
+# patch by Yannic / make the pocoDataSQLite lib find openssl
+find_package(OpenSSL REQUIRED)
+
 # Sources
 file(GLOB SRCS_G "src/*.cpp")
 POCO_SOURCES_AUTO(SQLITE_SRCS ${SRCS_G})
@@ -62,9 +65,6 @@ endif()
 
 POCO_INSTALL(DataSQLite)
 POCO_GENERATE_PACKAGE(DataSQLite)
-
-# patch by Yannic / make the pocoDataSQLite lib find openssl
-find_package(OpenSSL REQUIRED)
 
 if(ENABLE_TESTS)
 	add_subdirectory(testsuite)
